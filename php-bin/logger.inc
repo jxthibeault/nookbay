@@ -7,22 +7,24 @@
     define("TRANSACTION", "TRANSACTION");
 
     function logEntry($level, $entryText) {
+    
+        $eventIDChars = "0123456789";
+        $eventID = substr(str_shuffle($eventIDChars), 0, 16);
         
-        $eventID = openssl_random_pseudo_bytes(4, TRUE);
         $timestamp = date("Y-m-d H:i:s");
         
-        $connection = mysql_connect("localhost", "local", "password")
-            or die("Couldn't connect to database host.");
-        $db = mysql_select_db("nookbay", $connection)
-            or die("Couldn't select database.");
+        $mysqli = new mysqli("localhost", "local", "password", "nookbay");
+        if($mysqli -> connect_errno) {
+            echo "Failed to conenct to database: " . $mysqli -> connect_error;
+            exit();
+        }
         
         $query = "INSERT INTO event_log (eventID, timestamp, level, event) VALUE ('"
             . $eventID . "', '" . $timestamp . "', '" . $level . "', '"
             . $entryText . "')";
-        $result = mysql_query($query)
-            or die("Query failed: " . mysql_error());
-        
-        mysql_close($connection);
+        $result = $mysqli -> query($query);
+
+        $mysqli -> close();
     }
 
 ?>
