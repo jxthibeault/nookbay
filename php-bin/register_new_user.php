@@ -1,5 +1,5 @@
 <?php
-    include("logger.php");
+    include("logger.inc");
 
     $username = $_REQUEST['username'];
     $email = $_REQUEST['email'];

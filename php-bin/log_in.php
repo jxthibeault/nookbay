@@ -1,10 +1,9 @@
 <?php
-    include("logger.php");
-    include("session_manager.php");
+    include("logger.inc");
+    include("sessions_manager.php");
 
     $username = $_REQUEST['username'];
     $password = $_REQUEST['password'];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
 
@@ -13,12 +12,14 @@
         exit();
     }
 
-    $query = "SELECT uuid, username, password FROM users WHERE username = '"
-            . $username . "' AND password = '" . $passwordHash . "'";
+    $query = "SELECT uuid, username, password FROM users WHERE username = \""
+            . $username . "\"";
     $result = $mysqli -> query($query);
+    $mysqli -> close();
         
     $row = $result->fetch_assoc();
-    if($result -> num_rows < 1) {
+    $validPassword = password_verify($password, $row['password']);
+    if(!$validPassword) {
         echo "BAD LOGIN";
         logEntry(SECURITY, "Bad login attempt for " . $row["uuid"] . " from " . getRealIpAddr());
     } else {

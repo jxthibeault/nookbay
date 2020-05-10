@@ -1,8 +1,4 @@
 <?php
-    include("logger.php");
-    
-    $authCookie = "nookbayAuth";
-    $timestamp = date("Y-m-d H:i:s");
     
     function getRealIpAddr() {
         if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -17,6 +13,8 @@
 
     function startSession($uuid) {
     
+        $authCookie = "nookbayAuth";
+        $timestamp = date("Y-m-d H:i:s");
         $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
 
         if($mysqli -> connect_errno) {
@@ -25,7 +23,7 @@
         }
         
         $sidChars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-        $sid = substr(str_shuffle($uuidChars), 0, 16);
+        $sid = substr(str_shuffle($sidChars), 0, 16);
         $sidDelimiter = "-";
 
         $position = 4;
@@ -45,14 +43,7 @@
         $sessionExpiration = time() + 60*60*24*21;
         setcookie($authCookie, $sid, $sessionExpiration);
     
-        logEntry(SECURITY, "Started session: " . $sid)
-    }
-    
-    function endSession() {
-    
-    }
-    
-    function validateSession() {
+        logEntry(SECURITY, "Started session: " . $sid);
     
     }
 
