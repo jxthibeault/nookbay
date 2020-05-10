@@ -1,5 +1,5 @@
 <?php
-    include("logger.inc");
+    include("logger.php");
 
     $username = $_REQUEST['username'];
     $email = $_REQUEST['email'];
@@ -19,7 +19,7 @@
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $hashedEmail = password_hash($email, PASSWORD_DEFAULT);
 
-    $mysqli = new mysqli("localhost", "local", "password", "nookbay");
+    $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
     if($mysqli -> connect_errno) {
         echo "Failed to conenct to database: " . $mysqli -> connect_error;
         exit();

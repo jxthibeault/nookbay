@@ -1,6 +1,6 @@
 <?php
 
-    define("INFORMATION", "SECURITY");
+    define("INFORMATION", "INFORMATION");
     define("SECURITY", "SECURITY");
     define("ERROR", "ERROR");
     define("ACCOUNTS", "ACCOUNTS");
@@ -13,9 +13,9 @@
         
         $timestamp = date("Y-m-d H:i:s");
         
-        $mysqli = new mysqli("localhost", "local", "password", "nookbay");
+        $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
         if($mysqli -> connect_errno) {
-            echo "Failed to conenct to database: " . $mysqli -> connect_error;
+            echo "Failed to connect to database: " . $mysqli -> connect_error;
             exit();
         }
         
