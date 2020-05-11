@@ -22,6 +22,22 @@
             exit();
         }
         
+        $query = "SELECT sessionID FROM active_sessions WHERE uuid = \"" . $uuid
+            . "\" AND hostIP = \"" . getRealIpAddr() . "\"";
+        $result = $mysqli -> query($query);
+
+        if($result->num_rows > 0) {
+            while($row = $result -> fetch_assoc()) {
+                $query = "DELETE FROM active_sessions WHERE sessionID = \"" . $row["sessionID"]
+                    . "\"";
+                
+                $mysqli -> query($query);
+                $mysqli -> close();
+                logEntry(INFORMATION, "Closed conflicting session " . $row["sessionID"]);
+                $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
+            }
+        }
+        
         $sidChars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
         $sid = substr(str_shuffle($sidChars), 0, 16);
         $sidDelimiter = "-";
@@ -41,10 +57,25 @@
         $mysqli -> close();
         
         $sessionExpiration = time() + 60*60*24*21;
-        setcookie($authCookie, $sid, $sessionExpiration);
+        setcookie($authCookie, $sid, $sessionExpiration, "/", "nookbay.app", 1, 1);
     
         logEntry(SECURITY, "Started session: " . $sid);
     
+    }
+
+    function isValidSession() {
+        $authCookie = "nookbayAuth";
+        
+        if(!isset($_COOKIE[$authCookie])) {
+            return false;
+        } else {
+            $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
+            if($mysqli -> connect_errno) {
+                return false;
+            }
+            
+            $query = "SELECT ";
+        }
     }
 
 ?>
