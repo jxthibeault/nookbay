@@ -1,12 +1,14 @@
 <?php
-    include("database_auth.inc");
-    include("logger.inc");
-    include("sessions_manager.php");
+    namespace Nookbay\Log_In;
+
+    require_once("Db_Auth.inc");
+    require_once("Logger.inc");
+    require_once("Sessions.php");
 
     $username = $_REQUEST['username'];
     $password = $_REQUEST['password'];
 
-    $dbKey = getDatabaseKey();
+    $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
     $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
 
     if($mysqli -> connect_errno) {
@@ -23,11 +25,9 @@
     $validPassword = password_verify($password, $row['password']);
     if(!$validPassword) {
         echo "BAD LOGIN";
-        logEntry(SECURITY, "Bad login attempt for " . $row["uuid"] . " from " . getRealIpAddr());
+        \Nookbay\Logger\logEntry(SECURITY, "Bad login attempt for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
     } else {
-        logEntry(SECURITY, "Successful login for " . $row["uuid"] . " from " . getRealIpAddr());
-        startSession($row["uuid"]);
+        \Nookbay\Logger\logEntry(SECURITY, "Successful login for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
+        \Nookbay\Sessions\startSession($row["uuid"]);
         echo "GOOD LOGIN";
     }
-
-?>

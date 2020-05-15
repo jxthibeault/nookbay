@@ -1,6 +1,8 @@
 <?php
-    include("database_auth.inc");
-    include("logger.inc");
+    namespace Nookbay\Register_New_User;
+
+    require_once("Db_Auth.inc");
+    require_once("Logger.inc");
 
     $username = $_REQUEST['username'];
     $email = $_REQUEST['email'];
@@ -20,7 +22,7 @@
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $hashedEmail = password_hash($email, PASSWORD_DEFAULT);
 
-    $dbKey = getDatabaseKey();
+    $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
     $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
 
     if($mysqli -> connect_errno) {
@@ -35,5 +37,5 @@
 
     $mysqli -> close();
 
-    logEntry(ACCOUNTS, "New user created: UUID " . $uuid);
-?>
+    \Nookbay\Logger\logEntry(ACCOUNTS, "New user created: UUID " . $uuid);
+    \Nookbay\Sessions\startSession($uuid);

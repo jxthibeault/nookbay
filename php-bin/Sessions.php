@@ -1,4 +1,8 @@
 <?php
+    namespace Nookbay\Sessions;
+
+    require_once("Db_Auth.inc");
+    require_once("Logger.inc");
     
     // Provides some true-IP functionality against proxies and HTTP header mutation
     // Takes no args; returns a string representation of the client IP
@@ -24,7 +28,7 @@
         $authCookie = "nookbayAuth";    // name of cookie browser uses for session validation
         $timestamp = date("Y-m-d H:i:s");
         
-        $dbKey = getDatabaseKey();
+        $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
         $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
 
         if($mysqli -> connect_errno) {
@@ -45,9 +49,9 @@
                 
                 $mysqli -> query($query);
                 $mysqli -> close();
-                logEntry(INFORMATION, "Closed conflicting session " . $row["sessionID"]);
+                \Nookbay\Logger\logEntry(INFORMATION, "Closed conflicting session " . $row["sessionID"]);
                 
-                $dbKey = getDatabaseKey();
+                $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
                 $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
             }
         }
@@ -76,7 +80,7 @@
         $sessionExpiration = time() + 60*60*24*21;
         setcookie($authCookie, $sid, $sessionExpiration, "/", "nookbay.app", 1, 1);
     
-        logEntry(SECURITY, "Started session: " . $sid);
+        \Nookbay\Logger\logEntry(SECURITY, "Started session: " . $sid);
     
     }
 
@@ -90,7 +94,7 @@
         if(!isset($_COOKIE[$authCookie])) {
             return false;
         } else {
-            $dbKey = getDatabaseKey();
+            $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
             $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
             
             if($mysqli -> connect_errno) {
@@ -100,5 +104,3 @@
             $query = "SELECT ";
         }
     }
-
-?>

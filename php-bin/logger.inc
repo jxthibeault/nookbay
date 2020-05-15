@@ -1,6 +1,7 @@
 <?php
-    // Scripts calling these functions MUST declare an include for database_auth.inc
-    // Must be the FIRST declared include AFTER database_auth.inc in a bottom-level script
+    namespace Nookbay\Logger;
+
+    require_once("Db_Auth.inc");
 
     define("INFORMATION", "INFORMATION");
     define("SECURITY", "SECURITY");
@@ -15,7 +16,7 @@
         
         $timestamp = date("Y-m-d H:i:s");
         
-        $dbKey = getDatabaseKey();
+        $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
         $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
         
         if($mysqli -> connect_errno) {
@@ -30,5 +31,3 @@
 
         $mysqli -> close();
     }
-
-?>

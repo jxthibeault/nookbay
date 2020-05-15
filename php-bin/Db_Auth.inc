@@ -1,5 +1,5 @@
 <?php
-    // Must be the FIRST declared include in a bottom-level script
+    namespace Nookbay\Db_Auth;
 
     function getDatabaseKey() {
         $keyFile = fopen("./mysqlDatabaseKey", "r") or die("Database keyfile error");
@@ -13,5 +13,3 @@
         fclose($keyFile);
         return $key;
     }
-
-?>
