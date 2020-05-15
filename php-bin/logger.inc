@@ -1,4 +1,6 @@
 <?php
+    // Scripts calling these functions MUST declare an include for database_auth.inc
+    // Must be the FIRST declared include AFTER database_auth.inc in a bottom-level script
 
     define("INFORMATION", "INFORMATION");
     define("SECURITY", "SECURITY");
@@ -13,7 +15,9 @@
         
         $timestamp = date("Y-m-d H:i:s");
         
-        $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
+        $dbKey = getDatabaseKey();
+        $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
+        
         if($mysqli -> connect_errno) {
             echo "Failed to connect to database: " . $mysqli -> connect_error;
             exit();

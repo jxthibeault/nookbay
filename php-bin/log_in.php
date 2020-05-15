@@ -1,11 +1,13 @@
 <?php
+    include("database_auth.inc");
     include("logger.inc");
     include("sessions_manager.php");
 
     $username = $_REQUEST['username'];
     $password = $_REQUEST['password'];
 
-    $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
+    $dbKey = getDatabaseKey();
+    $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
 
     if($mysqli -> connect_errno) {
         echo "Failed to connect to database: " . $mysqli -> connect_error;
