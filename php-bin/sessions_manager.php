@@ -23,7 +23,9 @@
     
         $authCookie = "nookbayAuth";    // name of cookie browser uses for session validation
         $timestamp = date("Y-m-d H:i:s");
-        $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
+        
+        $dbKey = getDatabaseKey();
+        $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
 
         if($mysqli -> connect_errno) {
             echo "Failed to connect to database: " . $mysqli -> connect_error;
@@ -44,7 +46,9 @@
                 $mysqli -> query($query);
                 $mysqli -> close();
                 logEntry(INFORMATION, "Closed conflicting session " . $row["sessionID"]);
-                $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
+                
+                $dbKey = getDatabaseKey();
+                $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
             }
         }
         
@@ -86,7 +90,9 @@
         if(!isset($_COOKIE[$authCookie])) {
             return false;
         } else {
-            $mysqli = new mysqli("localhost", "local", "password", "nookbay_data");
+            $dbKey = getDatabaseKey();
+            $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
+            
             if($mysqli -> connect_errno) {
                 return false;
             }
