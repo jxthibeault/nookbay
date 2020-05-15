@@ -8,22 +8,22 @@
     $email = $_REQUEST['email'];
     $password = $_REQUEST['password'];
 
-    $uuidChars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-    $uuid = substr(str_shuffle($uuidChars), 0, 16);
-    $uuidDelimiter = "-";
+    $uuid_chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+    $uuid = substr(str_shuffle($uuid_chars), 0, 16);
+    $uuid_delimiter = "-";
 
     $position = 4;
-    $uuid = substr_replace($uuid, $uuidDelimiter, $position, 0);
+    $uuid = substr_replace($uuid, $uuid_delimiter, $position, 0);
     $position = 9;
-    $uuid = substr_replace($uuid, $uuidDelimiter, $position, 0);
+    $uuid = substr_replace($uuid, $uuid_delimiter, $position, 0);
     $position = 14;
-    $uuid = substr_replace($uuid, $uuidDelimiter, $position, 0);
+    $uuid = substr_replace($uuid, $uuid_delimiter, $position, 0);
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $hashedEmail = password_hash($email, PASSWORD_DEFAULT);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $hashed_email = password_hash($email, PASSWORD_DEFAULT);
 
-    $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
-    $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
+    $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+    $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
 
     if($mysqli -> connect_errno) {
         echo "Failed to conenct to database: " . $mysqli -> connect_error;
@@ -31,8 +31,8 @@
     }
 
     $query = "INSERT INTO users (uuid, username, email, password) VALUES('"
-        . $uuid . "', '" . $username . "', '" . $hashedEmail . "', '"
-        . $hashedPassword . "')";
+        . $uuid . "', '" . $username . "', '" . $hashed_email . "', '"
+        . $hashed_password . "')";
     $result = $mysqli -> query($query);
 
     $mysqli -> close();

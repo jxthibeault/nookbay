@@ -11,21 +11,21 @@
 
     function logEntry($level, $entryText) {
     
-        $eventIDChars = "0123456789";
-        $eventID = substr(str_shuffle($eventIDChars), 0, 16);
+        $event_id_chars = "0123456789";
+        $event_id = substr(str_shuffle($event_id_chars), 0, 16);
         
         $timestamp = date("Y-m-d H:i:s");
         
-        $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
-        $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
+        $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+        $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
         
         if($mysqli -> connect_errno) {
             echo "Failed to connect to database: " . $mysqli -> connect_error;
             exit();
         }
         
-        $query = "INSERT INTO event_log (eventID, timestamp, level, event) VALUE ('"
-            . $eventID . "', '" . $timestamp . "', '" . $level . "', '"
+        $query = "INSERT INTO event_log (event_id, timestamp, level, event) VALUE ('"
+            . $event_id . "', '" . $timestamp . "', '" . $level . "', '"
             . $entryText . "')";
         $result = $mysqli -> query($query);
 

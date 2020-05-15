@@ -2,14 +2,14 @@
     namespace Nookbay\Db_Auth;
 
     function getDatabaseKey() {
-        $keyFile = fopen("./mysqlDatabaseKey", "r") or die("Database keyfile error");
+        $key_file = fopen("./mysqlDatabaseKey", "r") or die("Database key_file error");
         $key = array("", "");
         
-        $key[0] = trim(fgets($keyFile));
-        $key[1] = trim(fgets($keyFile));
-        $key[2] = trim(fgets($keyFile));
-        $key[3] = trim(fgets($keyFile));
+        $key[0] = trim(fgets($key_file));
+        $key[1] = trim(fgets($key_file));
+        $key[2] = trim(fgets($key_file));
+        $key[3] = trim(fgets($key_file));
         
-        fclose($keyFile);
+        fclose($key_file);
         return $key;
     }

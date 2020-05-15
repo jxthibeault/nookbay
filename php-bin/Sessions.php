@@ -25,11 +25,11 @@
     // $uuid: full-form UUID of authenticated user; returns NULL
     function startSession($uuid) {
     
-        $authCookie = "nookbayAuth";    // name of cookie browser uses for session validation
+        $auth_cookie = "nookbayAuth";    // name of cookie browser uses for session validation
         $timestamp = date("Y-m-d H:i:s");
         
-        $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
-        $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
+        $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+        $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
 
         if($mysqli -> connect_errno) {
             echo "Failed to connect to database: " . $mysqli -> connect_error;
@@ -51,22 +51,22 @@
                 $mysqli -> close();
                 \Nookbay\Logger\logEntry(INFORMATION, "Closed conflicting session " . $row["sessionID"]);
                 
-                $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
-                $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
+                $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+                $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
             }
         }
         
         // Generate a session identifier of the form XXXX-XXXX-XXXX-XXXX
-        $sidChars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
-        $sid = substr(str_shuffle($sidChars), 0, 16);
-        $sidDelimiter = "-";
+        $sid_chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+        $sid = substr(str_shuffle($sid_chars), 0, 16);
+        $sid_delimiter = "-";
 
         $position = 4;
-        $sid = substr_replace($sid, $sidDelimiter, $position, 0);
+        $sid = substr_replace($sid, $sid_delimiter, $position, 0);
         $position = 9;
-        $sid = substr_replace($sid, $sidDelimiter, $position, 0);
+        $sid = substr_replace($sid, $sid_delimiter, $position, 0);
         $position = 14;
-        $sid = substr_replace($sid, $sidDelimiter, $position, 0);
+        $sid = substr_replace($sid, $sid_delimiter, $position, 0);
         
         // Write new session to the sessions database
         $query = "INSERT INTO active_sessions (sessionID, uuid, hostIP, firstAuth, lastUsed) VALUES('"
@@ -77,8 +77,8 @@
         $mysqli -> close();
         
         // Set a cookie on the client identifying the active session
-        $sessionExpiration = time() + 60*60*24*21;
-        setcookie($authCookie, $sid, $sessionExpiration, "/", "nookbay.app", 1, 1);
+        $session_expiration = time() + 60*60*24*21;
+        setcookie($auth_cookie, $sid, $session_expiration, "/", "nookbay.app", 1, 1);
     
         \Nookbay\Logger\logEntry(SECURITY, "Started session: " . $sid);
     
@@ -89,13 +89,13 @@
     administrator. */
     // returns TRUE on a valid session, otherwise returns FALSE
     function isValidSession() {
-        $authCookie = "nookbayAuth";
+        $auth_cookie = "nookbayAuth";
         
-        if(!isset($_COOKIE[$authCookie])) {
+        if(!isset($_COOKIE[$auth_cookie])) {
             return false;
         } else {
-            $dbKey = \Nookbay\Db_Auth\getDatabaseKey();
-            $mysqli = new mysqli($dbKey[0], $dbKey[1], $dbKey[2], $dbKey[3]);
+            $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+            $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
             
             if($mysqli -> connect_errno) {
                 return false;
