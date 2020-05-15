@@ -49,7 +49,7 @@
                 
                 $mysqli -> query($query);
                 $mysqli -> close();
-                \Nookbay\Logger\logEntry(INFORMATION, "Closed conflicting session " . $row["sessionID"]);
+                \Nookbay\Logger\logEntry(6, "Closed conflicting session " . $row["sessionID"]);
                 
                 $db_key = \Nookbay\Db_Auth\getDatabaseKey();
                 $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
@@ -80,7 +80,7 @@
         $session_expiration = time() + 60*60*24*21;
         setcookie($auth_cookie, $sid, $session_expiration, "/", "nookbay.app", 1, 1);
     
-        \Nookbay\Logger\logEntry(SECURITY, "Started session: " . $sid);
+        \Nookbay\Logger\logEntry(6, "Started session: " . $sid);
     
     }
 

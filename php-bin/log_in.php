@@ -25,9 +25,9 @@
     $valid_password = password_verify($password, $row['password']);
     if(!$valid_password) {
         echo "BAD LOGIN";
-        \Nookbay\Logger\logEntry(SECURITY, "Bad login attempt for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
+        \Nookbay\Logger\logEntry(5, "Bad login attempt for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
     } else {
-        \Nookbay\Logger\logEntry(SECURITY, "Successful login for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
+        \Nookbay\Logger\logEntry(6, "Successful login for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
         \Nookbay\Sessions\startSession($row["uuid"]);
         echo "GOOD LOGIN";
     }

@@ -37,5 +37,5 @@
 
     $mysqli -> close();
 
-    \Nookbay\Logger\logEntry(ACCOUNTS, "New user created: UUID " . $uuid);
+    \Nookbay\Logger\logEntry(5, "New user created: UUID " . $uuid);
     \Nookbay\Sessions\startSession($uuid);

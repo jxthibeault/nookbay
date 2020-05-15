@@ -3,11 +3,15 @@
 
     require_once("Db_Auth.inc");
 
-    define("INFORMATION", "INFORMATION");
-    define("SECURITY", "SECURITY");
-    define("ERROR", "ERROR");
-    define("ACCOUNTS", "ACCOUNTS");
-    define("TRANSACTION", "TRANSACTION");
+    define("SYSLOG", array(
+        "EMERGENCY",
+        "ALERT",
+        "CRITICAL",
+        "ERROR",
+        "WARNING",
+        "INFO",
+        "DEBUG"
+    ));
 
     function logEntry($level, $entryText) {
     
@@ -25,7 +29,7 @@
         }
         
         $query = "INSERT INTO event_log (event_id, timestamp, level, event) VALUE ('"
-            . $event_id . "', '" . $timestamp . "', '" . $level . "', '"
+            . $event_id . "', '" . $timestamp . "', '" . SYSLOG[$level] . "', '"
             . $entryText . "')";
         $result = $mysqli -> query($query);
 
