@@ -7,6 +7,9 @@ assignees: jxthibeault
 
 ---
 
+**Please do not use this system for reporting security or safety issues. Please report all security concerns using the process designated in our [security policy](https://github.com/jxthibeault/nookbay/security/policy).**
+
+***
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
