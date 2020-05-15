@@ -1,6 +1,11 @@
 <?php
+    /**
+     * Registers a new user to the users database.
+     *
+     * @author  Joshua Thibeault <jxthibeault@gmail.com>
+     * @since   v0.1-alpha
+     */
     namespace Nookbay\Register_New_User;
-
     require_once("Db_Auth.inc");
     require_once("Logger.inc");
 
@@ -25,7 +30,7 @@
     $db_key = \Nookbay\Db_Auth\getDatabaseKey();
     $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
 
-    if($mysqli -> connect_errno) {
+    if ($mysqli -> connect_errno) {
         echo "Failed to conenct to database: " . $mysqli -> connect_error;
         exit();
     }

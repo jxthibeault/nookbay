@@ -1,6 +1,11 @@
 <?php
+    /**
+     * Verifies user login and initiates a session on a good login.
+     *
+     * @author Joshua Thibeault <jxthibeault@gmail.com>
+     * @since v0.1-alpha
+     */
     namespace Nookbay\Log_In;
-
     require_once("Db_Auth.inc");
     require_once("Logger.inc");
     require_once("Sessions.php");
@@ -11,7 +16,7 @@
     $db_key = \Nookbay\Db_Auth\getDatabaseKey();
     $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
 
-    if($mysqli -> connect_errno) {
+    if ($mysqli -> connect_errno) {
         echo "Failed to connect to database: " . $mysqli -> connect_error;
         exit();
     }
@@ -20,14 +25,16 @@
             . $username . "\"";
     $result = $mysqli -> query($query);
     $mysqli -> close();
-        
+
     $row = $result->fetch_assoc();
     $valid_password = password_verify($password, $row['password']);
-    if(!$valid_password) {
+    if (!$valid_password) {
         echo "BAD LOGIN";
-        \Nookbay\Logger\logEntry(5, "Bad login attempt for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
+        \Nookbay\Logger\logEntry(5, "Bad login attempt for " . $row["uuid"]
+                                 . " from " . \Nookbay\Sessions\getRealIpAddr());
     } else {
-        \Nookbay\Logger\logEntry(6, "Successful login for " . $row["uuid"] . " from " . \Nookbay\Sessions\getRealIpAddr());
+        \Nookbay\Logger\logEntry(6, "Successful login for " . $row["uuid"]
+                                 . " from " . \Nookbay\Sessions\getRealIpAddr());
         \Nookbay\Sessions\startSession($row["uuid"]);
         echo "GOOD LOGIN";
     }
