@@ -1,4 +1,5 @@
 # nookbay
+[![GitHub Release](https://img.shields.io/github/v/release/jxthibeault/nookbay?include_prereleases&style=flat-square)]()
 [![GitHub Open Issues](https://img.shields.io/github/issues-raw/jxthibeault/nookbay?style=flat-square)](https://github.com/jxthibeault/nookbay/issues)
 [![GitHub Closed Issues](https://img.shields.io/github/issues-closed-raw/jxthibeault/nookbay?style=flat-square)](https://github.com/jxthibeault/nookbay/issues)
 [![GitHub Commits](https://img.shields.io/github/last-commit/jxthibeault/nookbay?style=flat-square)](https://github.com/jxthibeault/nookbay/commits)
