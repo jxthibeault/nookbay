@@ -5,9 +5,6 @@
      * @author  Joshua Thibeault <jxthibeault@gmail.com>
      * @since   v0.1-alpha
      */
-    namespace Nookbay\Sessions;
-    require_once("Db_Auth.inc");
-    require_once("Logger.inc");
 
     /**
      * This gets the true IP address of the client regardless of proxy or
@@ -44,7 +41,7 @@
         $auth_cookie = "nookbayAuth";
         $timestamp = date("Y-m-d H:i:s");
 
-        $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+        $db_key = getDatabaseKey();
         $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
 
         if ($mysqli -> connect_errno) {
@@ -66,10 +63,10 @@
 
                 $mysqli -> query($query);
                 $mysqli -> close();
-                \Nookbay\Logger\logEntry(6, "Closed conflicting session "
+                logEntry(6, "Closed conflicting session "
                                          . $row["sessionID"]);
 
-                $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+                $db_key = getDatabaseKey();
                 $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2],
                                      $db_key[3]);
             }
@@ -101,7 +98,7 @@
         setcookie($auth_cookie, $sid, $session_expiration, "/", "nookbay.app",
                   1, 1);
 
-        \Nookbay\Logger\logEntry(6, "Started session: " . $sid);
+        logEntry(6, "Started session: " . $sid);
 
     }
 
@@ -121,7 +118,7 @@
         if (!isset($_COOKIE[$auth_cookie])) {
             return FALSE;
         } else {
-            $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+            $db_key = getDatabaseKey();
             $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
 
             if($mysqli -> connect_errno) {

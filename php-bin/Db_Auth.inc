@@ -6,7 +6,6 @@
      * @author  Joshua Thibeault <jxthibeault@gmail.com>
      * @since   v0.1.1a
      */
-    namespace Nookbay\Db_Auth;
 
     /**
      * Get the database information.

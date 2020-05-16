@@ -5,8 +5,6 @@
      * @author  Joshua Thibeault <jxthibeault@gmail.com>
      * @since   v0.1-alpha
      */
-    namespace Nookbay\Logger;
-    require_once("Db_Auth.inc");
 
     define("SYSLOG", array(
         "EMERGENCY",
@@ -14,6 +12,7 @@
         "CRITICAL",
         "ERROR",
         "WARNING",
+        "NOTICE",
         "INFO",
         "DEBUG"
     ));
@@ -35,7 +34,7 @@
 
         $timestamp = date("Y-m-d H:i:s");
 
-        $db_key = \Nookbay\Db_Auth\getDatabaseKey();
+        $db_key = getDatabaseKey();
         $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
 
         if ($mysqli -> connect_errno) {
