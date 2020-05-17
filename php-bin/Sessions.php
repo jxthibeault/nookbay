@@ -41,13 +41,7 @@
         $auth_cookie = "nookbayAuth";
         $timestamp = date("Y-m-d H:i:s");
 
-        $db_key = getDatabaseKey();
-        $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
-
-        if ($mysqli -> connect_errno) {
-            echo "Failed to connect to database: " . $mysqli -> connect_error;
-            exit();
-        }
+        $mysqli = connectToDb();
 
         // Check for other (old) sessions with the same UUID on the same client
         $query = "SELECT sessionID FROM active_sessions WHERE uuid = \"" . $uuid
@@ -66,9 +60,7 @@
                 logEntry(6, "Closed conflicting session "
                                          . $row["sessionID"]);
 
-                $db_key = getDatabaseKey();
-                $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2],
-                                     $db_key[3]);
+                $mysqli = connectToDb();
             }
         }
 
@@ -118,12 +110,7 @@
         if (!isset($_COOKIE[$auth_cookie])) {
             return FALSE;
         } else {
-            $db_key = getDatabaseKey();
-            $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
-
-            if($mysqli -> connect_errno) {
-                return FALSE;
-            }
+            $mysqli = connectToDb();
 
             $query = "SELECT ";
         }

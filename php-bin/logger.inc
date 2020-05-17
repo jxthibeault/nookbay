@@ -34,13 +34,7 @@
 
         $timestamp = date("Y-m-d H:i:s");
 
-        $db_key = getDatabaseKey();
-        $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
-
-        if ($mysqli -> connect_errno) {
-            echo "Failed to connect to database: " . $mysqli -> connect_error;
-            exit();
-        }
+        $mysqli = connectToDb();
 
         $query = "INSERT INTO event_log (event_id, timestamp, level, event) VALUE ('"
             . $event_id . "', '" . $timestamp . "', '" . SYSLOG[$level] . "', '"

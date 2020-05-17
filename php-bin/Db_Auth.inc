@@ -28,3 +28,8 @@
         fclose($key_file);
         return $key;
     }
+    
+    function connectToDb() {
+        $db_key = getDatabaseKey();
+        return new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
+    }

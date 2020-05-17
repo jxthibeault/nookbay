@@ -26,13 +26,7 @@
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $hashed_email = password_hash($email, PASSWORD_DEFAULT);
 
-    $db_key = getDatabaseKey();
-    $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
-
-    if ($mysqli -> connect_errno) {
-        echo "Failed to conenct to database: " . $mysqli -> connect_error;
-        exit();
-    }
+    $mysqli = connectToDb();
 
     $query = "INSERT INTO users (uuid, username, email, password) VALUES('"
         . $uuid . "', '" . $username . "', '" . $hashed_email . "', '"

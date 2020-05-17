@@ -12,13 +12,7 @@
     $username = $_REQUEST['username'];
     $password = $_REQUEST['password'];
 
-    $db_key = getDatabaseKey();
-    $mysqli = new mysqli($db_key[0], $db_key[1], $db_key[2], $db_key[3]);
-
-    if ($mysqli -> connect_errno) {
-        echo "Failed to connect to database: " . $mysqli -> connect_error;
-        exit();
-    }
+    $mysqli = connectToDb();
 
     $query = "SELECT uuid, username, password FROM users WHERE username = \""
             . $username . "\"";
