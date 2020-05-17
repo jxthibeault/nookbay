@@ -1,3 +1,7 @@
+<?php
+    include("../php_bin/html_include/html_footer.inc");
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -22,7 +26,7 @@
             you directly provide to us in relation with nookBay services. You can 
             choose not to provide certain information, but then you might be unable 
             to take advantage of some of our services. This information includes your 
-            <a href="./email_policy.html">email address,</a> nookBay search history, 
+            <a href="https://nookbay.app/policy/email_policy.php">email address,</a> nookBay search history, 
             nookBay cart history, information you provide on your profile page, communications 
             with us via email or third-party services, support tickets and surveys 
             completed on our site, ratings and reviews made on our site, and information 
@@ -88,5 +92,9 @@
         to make them less protective of your information without your consent.
 
         <i>Excerpts of this notice adapted from third-party privacy notices for our own use.</i>
+            
+        <?php
+            writeFooter();
+        ?>
     </body>
 </html>

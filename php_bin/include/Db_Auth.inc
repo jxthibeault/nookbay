@@ -16,7 +16,7 @@
      * @return  array   Array containing database connection information.
      */
     function getDatabaseKey() {
-        $key_file = fopen("./mysqlDatabaseKey", "r")
+        $key_file = fopen("../key_ring/mysqlDatabaseKey", "r")
             or die("Database key_file error");
         $key = array("", "");
 

@@ -1,3 +1,7 @@
+<?php
+    include("./php_bin/html_include/html_footer.inc");
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -6,7 +10,7 @@
     </head>
     <body>
         <h1>Create an account</h1>
-        <form action="./php-bin/Register_New_User.php" method="POST">
+        <form action="./php_bin/auth/Register_New_User.php" method="POST">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" />
 
@@ -23,5 +27,9 @@
 
             <input type="submit" value="Continue" />
         </form>
+        
+        <?php
+            writeFooter();
+        ?>
     </body>
 </html>

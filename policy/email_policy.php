@@ -1,3 +1,7 @@
+<?php
+    include("../php_bin/html_include/html_footer.inc");
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -15,11 +19,13 @@
         
         When you provide your email address to us, it is encrypted using a 
         cryptographically secure, input-oriented algorithm before being saved to 
-        your account: without getting too complicated, that means even in the 
-        event of a data breach, bad guys need to know your email address from 
-        the get-go to unlock your data.
+        our servers.
             
         Your email address is also unable to be read or accessed directly by 
         any of our service administrators or moderators.
+            
+        <?php
+            writeFooter();
+        ?>
     </body>
 </html>

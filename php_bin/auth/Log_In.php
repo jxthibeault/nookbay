@@ -5,8 +5,8 @@
      * @author Joshua Thibeault <jxthibeault@gmail.com>
      * @since v0.1-alpha
      */
-    include("Db_Auth.inc");
-    include("Logger.inc");
+    include("../include/Db_Auth.inc");
+    include("../include/Logger.inc");
     include("Sessions.php");
 
     $username = $_REQUEST['username'];
