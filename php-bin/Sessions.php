@@ -6,6 +6,8 @@
      * @since   v0.1-alpha
      */
 
+    define(AUTH_COOKIE, "nookbayAuth");
+
     /**
      * This gets the true IP address of the client regardless of proxy or
      * HTTP header mutation.
@@ -37,8 +39,6 @@
      * @return  null
      */
     function startSession($uuid) {
-
-        $auth_cookie = "nookbayAuth";
         $timestamp = date("Y-m-d H:i:s");
 
         $mysqli = connectToDb();
@@ -49,7 +49,7 @@
         $result = $mysqli -> query($query);
 
         // Delete any old sessions with the same UUID on the same host
-        if($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
             while ($row = $result -> fetch_assoc()) {
                 $query = "DELETE FROM active_sessions WHERE sessionID = \""
                         . $row["sessionID"]
@@ -57,7 +57,7 @@
 
                 $mysqli -> query($query);
                 $mysqli -> close();
-                logEntry(6, "Closed conflicting session "
+                logEntry(6, "Ended conflicting session: "
                                          . $row["sessionID"]);
 
                 $mysqli = connectToDb();
@@ -87,7 +87,7 @@
 
         // Set a cookie on the client identifying the active session
         $session_expiration = time() + 60*60*24*21;
-        setcookie($auth_cookie, $sid, $session_expiration, "/", "nookbay.app",
+        setcookie(AUTH_COOKIE, $sid, $session_expiration, "/", "nookbay.app",
                   1, 1);
 
         logEntry(6, "Started session: " . $sid);
@@ -99,19 +99,44 @@
      * and client IP address a) exist, and b) are paired in the database.
      *
      * @author  Joshua Thibeault <jxthibeault@gmail.com>
-     * @since   v0.1-alpha
+     * @since   v0.1.1a
      *
      * @return  boolean TRUE for a valid session, FALSE for an invalid session
      */
-    // returns TRUE on a valid session, otherwise returns FALSE
     function isValidSession() {
-        $auth_cookie = "nookbayAuth";
-
-        if (!isset($_COOKIE[$auth_cookie])) {
+        if (!isset($_COOKIE[AUTH_COOKIE])) {
             return FALSE;
         } else {
             $mysqli = connectToDb();
 
-            $query = "SELECT ";
+            $query = "SELECT sessionID FROM active_sessions WHERE sessionID = \""
+                    . $_COOKIE[AUTH_COOKIE] . "\" AND hostIP = \"" . getRealIpAddr()
+                . "\"";
+            
+            if ($result->num_rows > 0) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
         }
+    }
+
+    /**
+     * This cleanly ends the existing session on the client and host ends.
+     *
+     * @author  Joshua Thibeault <jxthibeault@gmail.com>
+     * @since   v0.1.1a
+     *
+     * @return  NULL
+     */
+    function endSession() {
+        $mysqli = connectToDb();
+        $query = "DELETE FROM active_sessions WHERE sessionId = \""
+                . $_COOKIE[AUTH_COOKIE] . "\"";
+        $mysqli -> query($query);
+        $mysqli -> close();
+        
+        logEntry(6, "Ended session on server: " . $_COOKIE[AUTH_COOKIE]);
+        logEntry(6, "Ending session on client: " . $_COOKIE[AUTH_COOKIE]);
+        setcookie(AUTH_COOKIE, "", time() - 3600);
     }
