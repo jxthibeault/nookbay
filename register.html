@@ -1,7 +1,3 @@
-<?php
-    include("./php_bin/html_include/html_footer.inc");
-?>
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -12,7 +8,7 @@
         <h1>Create an account</h1>
         <form action="./php_bin/auth/Register_New_User.php" method="POST">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" />
+            <input type="text" id="username" name="username" required />
 
             <label for="email">Email</label>
             <input type="email" id="email" name="email" />
@@ -20,16 +16,16 @@
             We store your email in a secure, encrypted format for your privacy.
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" />
+            <input type="password" id="password" name="password" required />
 
             <label for="confirmPass">Confirm password</label>
-            <input type="password" id="confirmPass" name="confirmPass" />
+            <input type="password" id="confirmPass" name="confirmPass"
+                   required />
 
             <input type="submit" value="Continue" />
         </form>
-        
-        <?php
-            writeFooter();
-        ?>
+
+        <div id="footer"></div>
+        <script src="jscript/html_footer.js"></script>
     </body>
 </html>

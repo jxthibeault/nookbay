@@ -1,7 +1,3 @@
-<?php
-    include("./php_bin/html_include/html_footer.inc");
-?>
-
 <!doctype html>
 <html lang="en">
     <head>
@@ -12,16 +8,15 @@
         <h1>Log in</h1>
         <form action="./php_bin/auth/Log_In.php" method="POST">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" />
+            <input type="text" id="username" name="username" required />
 
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" />
+            <input type="password" id="password" name="password" required />
 
             <input type="submit" value="Continue" />
         </form>
-        
-        <?php
-            writeFooter();
-        ?>
+
+        <div id="footer"></div>
+        <script src="jscript/html_footer.js"></script>
     </body>
 </html>
