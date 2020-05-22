@@ -16,6 +16,7 @@ This is a web application powered by PHP and CSS that provides functionality sim
 This project is created with:
 * Hypertext Markup Language (HTML) version 5
 * Hypertext Preprocessor Engine (PHP) version 7.2.30
+* JavaScript version 1.8.5
 * Cascading Style Sheet (CSS) version 3
 * MySQL Server Engine version 8.0.20
 
