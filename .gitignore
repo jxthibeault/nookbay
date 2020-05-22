@@ -1,2 +1,3 @@
 
 php_bin/mysqlDatabaseKey
+php_bin/key_ring/mysqlDatabaseKey
