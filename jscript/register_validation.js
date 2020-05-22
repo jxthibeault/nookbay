@@ -28,6 +28,11 @@ function validateInput() {
     }
 }
 
+var params = new URLSearchParams(location.search);
+if (params.has("usernameError")) {
+    errorMessage.innerHTML = "Username is already taken.";
+}
+
 username.onchange = validateInput;
 password.onchange = validateInput;
 confirmPass.onkeyup = validateInput;

@@ -13,6 +13,18 @@
     $email = $_REQUEST['email'];
     $password = $_REQUEST['password'];
 
+    // Check if the username is already in use
+    $mysqli = connectToDb();
+    $query = "SELECT username FROM users WHERE username = \"" . $username
+        . "\"";
+    $result = $mysqli->query($query);
+
+    if ($result->num_rows > 0) {
+        // Halt everything and go back
+        header("Location: https://nookbay.app/register.html?usernameError=true");
+        exit();
+    }
+
     $uuid_chars = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
     $uuid = substr(str_shuffle($uuid_chars), 0, 16);
     $uuid_delimiter = "-";

@@ -112,7 +112,8 @@
             $query = "SELECT sessionID FROM active_sessions WHERE sessionID = \""
                     . $_COOKIE[AUTH_COOKIE] . "\" AND hostIP = \"" . getRealIpAddr()
                 . "\"";
-            
+            $result = $mysqli->query($query);
+
             if ($result->num_rows > 0) {
                 return TRUE;
             } else {
@@ -135,7 +136,7 @@
                 . $_COOKIE[AUTH_COOKIE] . "\"";
         $mysqli -> query($query);
         $mysqli -> close();
-        
+
         logEntry(6, "Ended session on server: " . $_COOKIE[AUTH_COOKIE]);
         logEntry(6, "Ending session on client: " . $_COOKIE[AUTH_COOKIE]);
         setcookie(AUTH_COOKIE, "", time() - 3600);
