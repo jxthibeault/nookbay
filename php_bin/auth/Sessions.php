@@ -6,7 +6,7 @@
      * @since   v0.1-alpha
      */
 
-    define(AUTH_COOKIE, "nookbayAuth");
+    define("AUTH_COOKIE", "nookbayAuth");
 
     /**
      * This gets the true IP address of the client regardless of proxy or
@@ -88,7 +88,7 @@
         // Set a cookie on the client identifying the active session
         $session_expiration = time() + 60*60*24*21;
         setcookie(AUTH_COOKIE, $sid, $session_expiration, "/", "nookbay.app",
-                  1, 1);
+                  1, 0);
 
         logEntry(6, "Started session: " . $sid);
 
