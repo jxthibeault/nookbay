@@ -5,6 +5,8 @@
 [![GitHub Commits](https://img.shields.io/github/last-commit/jxthibeault/nookbay?style=flat-square)](https://github.com/jxthibeault/nookbay/commits)
 [![Web Server Tracking](https://img.shields.io/website?down_color=red&down_message=offline&label=web%20server&up_color=green&up_message=online&url=https%3A%2F%2Fnookbay.app%2F&style=flat-square)](https://nookbay.app)
 
+### This project is abandoned. To contribute, please create a fork of this repository.
+
 This is a web application powered by PHP and CSS that provides functionality similar to the eBay platform for players of Animal Crossing: New Horizons. This is a reboot unrelated and disconnected from the original Nookbay of the early 2000s. This project is not for profit.
 
 ## Table of Contents
